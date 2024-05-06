@@ -30,6 +30,7 @@
         {
             input = new TextBox();
             Output = new ListBox();
+            LSB = new ListBox();
             SuspendLayout();
             // 
             // input
@@ -47,16 +48,25 @@
             Output.BackColor = SystemColors.InactiveCaption;
             Output.ForeColor = SystemColors.InfoText;
             Output.FormattingEnabled = true;
-            Output.Location = new Point(511, 26);
+            Output.Location = new Point(484, 26);
             Output.Name = "Output";
-            Output.Size = new Size(393, 324);
+            Output.Size = new Size(420, 104);
             Output.TabIndex = 1;
+            // 
+            // LSB
+            // 
+            LSB.FormattingEnabled = true;
+            LSB.Location = new Point(484, 191);
+            LSB.Name = "LSB";
+            LSB.Size = new Size(420, 104);
+            LSB.TabIndex = 2;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(916, 450);
+            Controls.Add(LSB);
             Controls.Add(Output);
             Controls.Add(input);
             Name = "Form1";
@@ -70,5 +80,6 @@
 
         private TextBox input;
         private ListBox Output;
+        private ListBox LSB;
     }
 }

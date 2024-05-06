@@ -15,7 +15,7 @@
 ! -------------------------------------------------
 ! Terminals
 ! -------------------------------------------------
-Varname={Varnamest}{Varnameed}*
+Varname = {Varnamest}{Varnameed}*
 String = '"'{char}*'"'
 Integer ={digit}+
 Char = '"' {char}'"'
@@ -96,7 +96,8 @@ Float ={digit}*'.'{digit}+
                |  <Expression> '>=' <Add Exp>
                |  <Expression> '==' <Add Exp>    !Equal
                |  <Expression> '<>' <Add Exp>    !Not equal
-               |  <Add Exp> 
+               |  <Add Exp>
+               |  Varname
 
 <Add Exp>     ::= <Add Exp> '+' <Mult Exp>
                |  <Add Exp> '-' <Mult Exp>
@@ -113,7 +114,9 @@ Float ={digit}*'.'{digit}+
 
 <Value>       ::= Identifier
                |Integer
-               |StringLiteral
+               |String
+               |Float
+               |Char
                |  '(' <Expression> ')'
 
 

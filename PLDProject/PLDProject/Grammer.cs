@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using com.calitha.goldparser.lalr;
 using com.calitha.commons;
-using System.Collections.Generic;
 
 namespace com.calitha.goldparser
 {
@@ -130,7 +129,7 @@ namespace com.calitha.goldparser
         RULE_EXPRESSION_EQEQ                          = 24, // <Expression> ::= <Expression> '==' <Add Exp>
         RULE_EXPRESSION_LTGT                          = 25, // <Expression> ::= <Expression> '<>' <Add Exp>
         RULE_EXPRESSION                               = 26, // <Expression> ::= <Add Exp>
-        RULE_EXPRESSION2                              = 27, // <Expression> ::= <Declaration and ass>
+        RULE_EXPRESSION_VARNAME                       = 27, // <Expression> ::= Varname
         RULE_ADDEXP_PLUS                              = 28, // <Add Exp> ::= <Add Exp> '+' <Mult Exp>
         RULE_ADDEXP_MINUS                             = 29, // <Add Exp> ::= <Add Exp> '-' <Mult Exp>
         RULE_ADDEXP                                   = 30, // <Add Exp> ::= <Mult Exp>
@@ -142,22 +141,23 @@ namespace com.calitha.goldparser
         RULE_VALUE_IDENTIFIER                         = 36, // <Value> ::= Identifier
         RULE_VALUE_INTEGER                            = 37, // <Value> ::= Integer
         RULE_VALUE_STRING                             = 38, // <Value> ::= String
-        RULE_VALUE_CHAR                               = 39, // <Value> ::= Char
-        RULE_VALUE_FLOAT                              = 40, // <Value> ::= Float
+        RULE_VALUE_FLOAT                              = 39, // <Value> ::= Float
+        RULE_VALUE_CHAR                               = 40, // <Value> ::= Char
         RULE_VALUE_LPAREN_RPAREN                      = 41  // <Value> ::= '(' <Expression> ')'
     };
 
     public class MyParser
     {
         private LALRParser parser;
-        ListBox lst;
-        public MyParser(string filename, ListBox output)
+        ListBox lst, LSB;
+        public MyParser(string filename,ListBox output, ListBox LSB)
         {
             FileStream stream = new FileStream(filename,
-                                               FileMode.Open,
-                                               FileAccess.Read,
+                                               FileMode.Open, 
+                                               FileAccess.Read, 
                                                FileShare.Read);
             lst = output;
+            this.LSB = LSB;
             Init(stream);
             stream.Close();
         }
@@ -187,6 +187,7 @@ namespace com.calitha.goldparser
 
             parser.OnTokenError += new LALRParser.TokenErrorHandler(TokenErrorEvent);
             parser.OnParseError += new LALRParser.ParseErrorHandler(ParseErrorEvent);
+            parser.OnTokenRead += new LALRParser.TokenReadHandler(TokenReadEvent);
         }
 
         public void Parse(string source)
@@ -599,8 +600,8 @@ namespace com.calitha.goldparser
                 //todo: Create a new object using the stored tokens.
                 return null;
 
-                case (int)RuleConstants.RULE_EXPRESSION2 :
-                //<Expression> ::= <Declaration and ass>
+                case (int)RuleConstants.RULE_EXPRESSION_VARNAME :
+                //<Expression> ::= Varname
                 //todo: Create a new object using the stored tokens.
                 return null;
 
@@ -659,13 +660,13 @@ namespace com.calitha.goldparser
                 //todo: Create a new object using the stored tokens.
                 return null;
 
-                case (int)RuleConstants.RULE_VALUE_CHAR :
-                //<Value> ::= Char
+                case (int)RuleConstants.RULE_VALUE_FLOAT :
+                //<Value> ::= Float
                 //todo: Create a new object using the stored tokens.
                 return null;
 
-                case (int)RuleConstants.RULE_VALUE_FLOAT :
-                //<Value> ::= Float
+                case (int)RuleConstants.RULE_VALUE_CHAR :
+                //<Value> ::= Char
                 //todo: Create a new object using the stored tokens.
                 return null;
 
@@ -690,6 +691,11 @@ namespace com.calitha.goldparser
             lst.Items.Add(message);
             string expectedtk = "ExpectedTokens : " + args.ExpectedTokens.ToString();
             lst.Items.Add(expectedtk);
+        }
+        private void TokenReadEvent(LALRParser parser, TokenReadEventArgs args)
+        {
+            string info = args.Token.Text + " \t\t" + (SymbolConstants)args.Token.Symbol.Id + "'";
+            LSB.Items.Add(info);
         }
 
     }

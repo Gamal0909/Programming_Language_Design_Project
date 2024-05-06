@@ -8,7 +8,7 @@ namespace PLDProject
         public Form1()
         {
             InitializeComponent();
-            parser = new MyParser("NEW.cgt",Output);
+            parser = new MyParser("Grammer.cgt", Output,LSB);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -19,6 +19,7 @@ namespace PLDProject
         private void input_TextChanged(object sender, EventArgs e)
         {
             Output.Items.Clear();
+            LSB.Items.Clear();
             parser.Parse(input.Text);
         }
     }
