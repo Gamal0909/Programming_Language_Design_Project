@@ -79,26 +79,25 @@ namespace com.calitha.goldparser
         SYMBOL_INRANGELPAREN     = 27, // 'in range ('
         SYMBOL_INTEGER           = 28, // Integer
         SYMBOL_STRING            = 29, // String
-        SYMBOL_STRINGLITERAL     = 30, // StringLiteral
-        SYMBOL_SWITCH            = 31, // switch
-        SYMBOL_VARNAME           = 32, // Varname
-        SYMBOL_WHILE             = 33, // while
-        SYMBOL_ADDEXP            = 34, // <Add Exp>
-        SYMBOL_CASES             = 35, // <Cases>
-        SYMBOL_DECLARATIONANDASS = 36, // <Declaration and ass>
-        SYMBOL_DEFAULT2          = 37, // <Default>
-        SYMBOL_DOWHILE           = 38, // <DoWhile>
-        SYMBOL_EXPRESSION        = 39, // <Expression>
-        SYMBOL_FORLOOP           = 40, // <ForLoop>
-        SYMBOL_IFSTAT            = 41, // <IFStat>
-        SYMBOL_MULTEXP           = 42, // <Mult Exp>
-        SYMBOL_NEGATEEXP         = 43, // <Negate Exp>
-        SYMBOL_PROGRAM           = 44, // <Program>
-        SYMBOL_STATEMENT         = 45, // <Statement>
-        SYMBOL_STATEMENTLIST     = 46, // <StatementList>
-        SYMBOL_SWITCHCASE        = 47, // <SwitchCase>
-        SYMBOL_VALUE             = 48, // <Value>
-        SYMBOL_WHILE2            = 49  // <While>
+        SYMBOL_SWITCH            = 30, // switch
+        SYMBOL_VARNAME           = 31, // Varname
+        SYMBOL_WHILE             = 32, // while
+        SYMBOL_ADDEXP            = 33, // <Add Exp>
+        SYMBOL_CASES             = 34, // <Cases>
+        SYMBOL_DECLARATIONANDASS = 35, // <Declaration and ass>
+        SYMBOL_DEFAULT2          = 36, // <Default>
+        SYMBOL_DOWHILE           = 37, // <DoWhile>
+        SYMBOL_EXPRESSION        = 38, // <Expression>
+        SYMBOL_FORLOOP           = 39, // <ForLoop>
+        SYMBOL_IFSTAT            = 40, // <IFStat>
+        SYMBOL_MULTEXP           = 41, // <Mult Exp>
+        SYMBOL_NEGATEEXP         = 42, // <Negate Exp>
+        SYMBOL_PROGRAM           = 43, // <Program>
+        SYMBOL_STATEMENT         = 44, // <Statement>
+        SYMBOL_STATEMENTLIST     = 45, // <StatementList>
+        SYMBOL_SWITCHCASE        = 46, // <SwitchCase>
+        SYMBOL_VALUE             = 47, // <Value>
+        SYMBOL_WHILE2            = 48  // <While>
     };
 
     enum RuleConstants : int
@@ -130,31 +129,33 @@ namespace com.calitha.goldparser
         RULE_EXPRESSION_EQEQ                          = 24, // <Expression> ::= <Expression> '==' <Add Exp>
         RULE_EXPRESSION_LTGT                          = 25, // <Expression> ::= <Expression> '<>' <Add Exp>
         RULE_EXPRESSION                               = 26, // <Expression> ::= <Add Exp>
-        RULE_ADDEXP_PLUS                              = 27, // <Add Exp> ::= <Add Exp> '+' <Mult Exp>
-        RULE_ADDEXP_MINUS                             = 28, // <Add Exp> ::= <Add Exp> '-' <Mult Exp>
-        RULE_ADDEXP                                   = 29, // <Add Exp> ::= <Mult Exp>
-        RULE_MULTEXP_TIMES                            = 30, // <Mult Exp> ::= <Mult Exp> '*' <Negate Exp>
-        RULE_MULTEXP_DIV                              = 31, // <Mult Exp> ::= <Mult Exp> '/' <Negate Exp>
-        RULE_MULTEXP                                  = 32, // <Mult Exp> ::= <Negate Exp>
-        RULE_NEGATEEXP_MINUS                          = 33, // <Negate Exp> ::= '-' <Value>
-        RULE_NEGATEEXP                                = 34, // <Negate Exp> ::= <Value>
-        RULE_VALUE_IDENTIFIER                         = 35, // <Value> ::= Identifier
-        RULE_VALUE_INTEGER                            = 36, // <Value> ::= Integer
-        RULE_VALUE_STRINGLITERAL                      = 37, // <Value> ::= StringLiteral
-        RULE_VALUE_LPAREN_RPAREN                      = 38  // <Value> ::= '(' <Expression> ')'
+        RULE_EXPRESSION2                              = 27, // <Expression> ::= <Declaration and ass>
+        RULE_ADDEXP_PLUS                              = 28, // <Add Exp> ::= <Add Exp> '+' <Mult Exp>
+        RULE_ADDEXP_MINUS                             = 29, // <Add Exp> ::= <Add Exp> '-' <Mult Exp>
+        RULE_ADDEXP                                   = 30, // <Add Exp> ::= <Mult Exp>
+        RULE_MULTEXP_TIMES                            = 31, // <Mult Exp> ::= <Mult Exp> '*' <Negate Exp>
+        RULE_MULTEXP_DIV                              = 32, // <Mult Exp> ::= <Mult Exp> '/' <Negate Exp>
+        RULE_MULTEXP                                  = 33, // <Mult Exp> ::= <Negate Exp>
+        RULE_NEGATEEXP_MINUS                          = 34, // <Negate Exp> ::= '-' <Value>
+        RULE_NEGATEEXP                                = 35, // <Negate Exp> ::= <Value>
+        RULE_VALUE_IDENTIFIER                         = 36, // <Value> ::= Identifier
+        RULE_VALUE_INTEGER                            = 37, // <Value> ::= Integer
+        RULE_VALUE_STRING                             = 38, // <Value> ::= String
+        RULE_VALUE_CHAR                               = 39, // <Value> ::= Char
+        RULE_VALUE_FLOAT                              = 40, // <Value> ::= Float
+        RULE_VALUE_LPAREN_RPAREN                      = 41  // <Value> ::= '(' <Expression> ')'
     };
 
     public class MyParser
     {
         private LALRParser parser;
-        ListBox lst;
-        public MyParser(string filename,ListBox output)
+
+        public MyParser(string filename)
         {
             FileStream stream = new FileStream(filename,
                                                FileMode.Open, 
                                                FileAccess.Read, 
                                                FileShare.Read);
-            lst = output;
             Init(stream);
             stream.Close();
         }
@@ -355,11 +356,6 @@ namespace com.calitha.goldparser
 
                 case (int)SymbolConstants.SYMBOL_STRING :
                 //String
-                //todo: Create a new object that corresponds to the symbol
-                return null;
-
-                case (int)SymbolConstants.SYMBOL_STRINGLITERAL :
-                //StringLiteral
                 //todo: Create a new object that corresponds to the symbol
                 return null;
 
@@ -601,6 +597,11 @@ namespace com.calitha.goldparser
                 //todo: Create a new object using the stored tokens.
                 return null;
 
+                case (int)RuleConstants.RULE_EXPRESSION2 :
+                //<Expression> ::= <Declaration and ass>
+                //todo: Create a new object using the stored tokens.
+                return null;
+
                 case (int)RuleConstants.RULE_ADDEXP_PLUS :
                 //<Add Exp> ::= <Add Exp> '+' <Mult Exp>
                 //todo: Create a new object using the stored tokens.
@@ -651,8 +652,18 @@ namespace com.calitha.goldparser
                 //todo: Create a new object using the stored tokens.
                 return null;
 
-                case (int)RuleConstants.RULE_VALUE_STRINGLITERAL :
-                //<Value> ::= StringLiteral
+                case (int)RuleConstants.RULE_VALUE_STRING :
+                //<Value> ::= String
+                //todo: Create a new object using the stored tokens.
+                return null;
+
+                case (int)RuleConstants.RULE_VALUE_CHAR :
+                //<Value> ::= Char
+                //todo: Create a new object using the stored tokens.
+                return null;
+
+                case (int)RuleConstants.RULE_VALUE_FLOAT :
+                //<Value> ::= Float
                 //todo: Create a new object using the stored tokens.
                 return null;
 
@@ -673,10 +684,7 @@ namespace com.calitha.goldparser
 
         private void ParseErrorEvent(LALRParser parser, ParseErrorEventArgs args)
         {
-            string message = "Parse error caused by token: '"+args.UnexpectedToken.ToString()+"In Line : " +args.UnexpectedToken.Location.LineNr;
-            lst.Items.Add(message);
-            string expectedtk = "ExpectedTokens : " + args.ExpectedTokens.ToString();
-            lst.Items.Add(expectedtk);
+            string message = "Parse error caused by token: '"+args.UnexpectedToken.ToString()+"'";
             //todo: Report message to UI?
         }
 

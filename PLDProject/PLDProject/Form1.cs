@@ -8,7 +8,7 @@ namespace PLDProject
         public Form1()
         {
             InitializeComponent();
-            parser = new MyParser("Grammer.cgt",Output);
+            parser = new MyParser("NEW.cgt",Output);
         }
 
         private void Form1_Load(object sender, EventArgs e)

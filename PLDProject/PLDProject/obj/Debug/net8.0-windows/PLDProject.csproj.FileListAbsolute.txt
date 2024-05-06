@@ -18,3 +18,4 @@ E:\CS\PLDProject\PLDProject\PLDProject\obj\Debug\net8.0-windows\refint\PLDProjec
 E:\CS\PLDProject\PLDProject\PLDProject\obj\Debug\net8.0-windows\PLDProject.pdb
 E:\CS\PLDProject\PLDProject\PLDProject\obj\Debug\net8.0-windows\PLDProject.genruntimeconfig.cache
 E:\CS\PLDProject\PLDProject\PLDProject\obj\Debug\net8.0-windows\ref\PLDProject.dll
+E:\CS\PLDProject\PLDProject\PLDProject\obj\Debug\net8.0-windows\PLDProject.sourcelink.json
